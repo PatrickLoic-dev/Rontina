@@ -1,18 +1,16 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { useFonts } from "expo-font";
+import { Stack } from "expo-router";
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+export default function RootLayout() {
+  const [fontsLoaded] = useFonts({
+    GeistMedium: require("../../assets/fonts/Geist-Medium.ttf"),
+    GeistRegular: require("../../assets/fonts/Geist-Regular.ttf"),
+    GeistSemiBold: require("../../assets/fonts/Geist-SemiBold.ttf"),
+  });
 
-SplashScreen.preventAutoHideAsync();
+  if (!fontsLoaded) {
+    return null;
+  }
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
-  );
+  return <Stack screenOptions={{ headerShown: false }} />;
 }
